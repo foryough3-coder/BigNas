@@ -1,0 +1,43 @@
+import type { SVGProps } from "react";
+
+const paths = {
+  "search": <><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></>,
+  "cart": <><path d="M3 4h2l2.3 11h10.9l2-8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></>,
+  "menu": <><path d="M4 6h16M4 12h16M4 18h16"/></>,
+  "close": <><path d="m6 6 12 12M18 6 6 18"/></>,
+  "arrow-right": <><path d="M4 12h16m-6-6 6 6-6 6"/></>,
+  "chevron-down": <><path d="m6 9 6 6 6-6"/></>,
+  "chevron-left": <><path d="m15 5-7 7 7 7"/></>,
+  "chevron-right": <><path d="m9 5 7 7-7 7"/></>,
+  "plus": <><path d="M12 5v14M5 12h14"/></>,
+  "minus": <><path d="M5 12h14"/></>,
+  "check": <><path d="m5 12 4.5 4.5L19 7"/></>,
+  "filter": <><path d="M4 6h16M7 12h10M10 18h4"/></>,
+  "phone": <><path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-5-2-2 2a15 15 0 0 1-7-7l2-2-2-5Z"/></>,
+  "whatsapp": <><path d="M4.4 17.1a9 9 0 1 1 3.1 2.8L3 21l1.4-3.9Z"/><path d="m9 7-1 .7c-.9 2.8 3.5 7.2 6.3 6.3l.7-1-2-1-1 1a8 8 0 0 1-2.8-2.8l1-1L9 7Z"/></>,
+  "mail": <><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></>,
+  "map-pin": <><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></>,
+  "ruler": <><path d="m3 16 13-13 5 5L8 21l-5-5Zm9-9 2 2m-5 1 2 2m-5 1 2 2"/></>,
+  "package": <><path d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm-9 5 9 5 9-5M12 13v9M7.5 5.5l9 5V15"/></>,
+  "trash": <><path d="M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7"/></>,
+  "external-link": <><path d="M14 3h7v7m0-7L10 14M10 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-6"/></>,
+  "pause": <><path d="M8 5v14M16 5v14"/></>,
+  "play": <><path d="m7 4 13 8-13 8V4Z"/></>,
+  "spigot": <><path d="M8 3h8v16H8V3ZM5 19h14l2 3H3l2-3ZM14 3v12"/><circle cx="10.5" cy="7.5" r=".7"/><circle cx="10.5" cy="12.5" r=".7"/></>,
+  "handrail": <><path d="M4 20h10M7 20v-8a6 6 0 0 1 6-6h4M9 20v-8a4 4 0 0 1 4-4h4M17 3v8M15 3h6"/></>,
+  "clamp": <><path d="M5 20V8a4 4 0 0 1 8 0v12H5Zm8 0h6V8a4 4 0 0 0-6-3.5M13 17h6"/><circle cx="16" cy="10" r="1"/><circle cx="16" cy="14" r="1"/></>,
+  "door-handle": <><path d="M6 2v20M18 2v20M6 7h4m4 0h4M6 17h4m4 0h4M10 5v4m4-4v4m-4 6v4m4-4v4"/></>,
+  "finial": <><circle cx="12" cy="8" r="6"/><path d="M10 14v3l-2 2v3h8v-3l-2-2v-3M8 19h8"/></>,
+  "flange": <><ellipse cx="12" cy="10" rx="9" ry="6"/><ellipse cx="12" cy="10" rx="4" ry="2.7"/><path d="M3 10v4c0 3.3 4 6 9 6s9-2.7 9-6v-4"/></>,
+} as const;
+
+export type IconName = keyof typeof paths;
+type IconProps = SVGProps<SVGSVGElement> & { name: IconName; size?: number; label?: string };
+/** Decorative by default. Label the enclosing button; use label for standalone meaningful icons. */
+export function Icon({ name, size = 24, label, ...props }: IconProps) {
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"
+    role={label ? "img" : undefined} aria-label={label} aria-hidden={label ? undefined : true} {...props}>
+    {paths[name]}
+  </svg>;
+}

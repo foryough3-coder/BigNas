@@ -1,0 +1,25 @@
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/geist-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --color-paper: #ffffff;
+  --color-ivory: #f7f5f0;
+  --color-blue: #456b87;
+  --color-navy: #243f50;
+  --color-red: #b54c46;
+  --color-red-hover: #963d38;
+  --color-ink: #252c30;
+  --color-muted: #636a6c;
+  --color-line: #e1e3e0;
+  --color-soft-blue: #edf2f5;
+  --font-display: "Geist", sans-serif;
+  --font-ui: "Geist", sans-serif;
+  --radius-control: 6px;
+  --content-width: 1280px;
+  --space-section: 76px;
+}
