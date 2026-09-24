@@ -9,7 +9,7 @@ export function WhatsAppButton({ product, quantity = 1, children = "WhatsApp", c
   const enquire = useEnquiry();
   return <button className={className}
     aria-label={product ? "Enquire about " + product.name + " on WhatsApp" : undefined}
-    onClick={() => enquire(product ? productMessage(product, quantity, window.location.origin) : projectMessage)}>
+    onClick={() => enquire(product ? productMessage(product, quantity) : projectMessage)}>
     <Icon name="whatsapp" size={18} />{children}
   </button>;
 }

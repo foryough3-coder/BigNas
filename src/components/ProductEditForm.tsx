@@ -38,7 +38,7 @@ export function ProductEditForm({ product, categories, action }: {
     <div className="form-field"><label htmlFor="dimensions">Dimensions (JSON, optional)</label><textarea id="dimensions" name="dimensions" rows={3} defaultValue={product?.dimensions ? JSON.stringify(product.dimensions) : ""} placeholder='{"heightMm": 80, "baseMm": 50}' /></div>
     <div className="form-field"><label htmlFor="thumbnailKey">Image path (card)</label><input id="thumbnailKey" name="thumbnailKey" defaultValue={product?.thumbnailKey} required placeholder="three16craft/products/v1/name-480.webp" /></div>
     <div className="form-field"><label htmlFor="imageKey">Image path (product page, optional)</label><input id="imageKey" name="imageKey" defaultValue={product?.imageKey} placeholder="three16craft/products/v1/name-1000.webp" />
-      <p className="form-note">Paths of images already in public/ or on R2. Leave empty to reuse the card image.</p>
+      <p className="form-note">Paths of images in the public/ folder. Leave empty to reuse the card image.</p>
     </div>
     <div className="form-field"><label htmlFor="alt">Image description (for screen readers)</label><input id="alt" name="alt" defaultValue={product?.alt} /></div>
     <div className="form-field"><label htmlFor="dataStatus">Data status</label>

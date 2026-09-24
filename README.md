@@ -46,7 +46,7 @@ Both checks passed after integration. The production build was also checked in C
 | Banner | public/three16craft/banners/v1 |
 | GIF and static logo | public/three16craft/brand/v1 |
 | Local Geist font and license | public/fonts |
-| R2 upload map | design/r2-manifest.json |
+| Image upload map (for a future image host; unused) | design/r2-manifest.json |
 | Reference design pack | design/three16craft-design-pack.zip |
 
 ## Current behavior
@@ -58,15 +58,15 @@ Both checks passed after integration. The production build was also checked in C
 - Customers can either "Enquire about your cart" (WhatsApp draft, unchanged) or "Submit order request" (/checkout), which writes to the `orders`/`order_items` tables. No payment is taken.
 - WhatsApp numbers and the business location are edited at /316nas/settings. The first number is used by every WhatsApp button; until one is set, the buttons show a copyable draft.
 - The main logo is an animated GIF and plays by default, including on devices set to reduce motion. The footer button pauses it.
-- All images and the font work locally without R2 or a font service.
+- The live site is https://three16craft.com. All images and the font are served from the site itself (public/); no image host or font service is used.
 
-## Connect Supabase and R2
+## Environment variables
 
 Copy .env.example to .env.local and supply the real values. Do not put upload secrets in NEXT_PUBLIC variables.
 
 - NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY: from your Supabase project's Project Settings > API. Required — the catalog, checkout and admin area all depend on them.
-- NEXT_PUBLIC_SITE_URL: the website's public origin for enquiry links.
-- NEXT_PUBLIC_ASSET_BASE_URL: the HTTPS custom domain serving the R2 objects. Leave empty for bundled local images.
+- NEXT_PUBLIC_SITE_URL: optional; defaults to https://three16craft.com. Used for canonical links, the sitemap, share previews and product links in WhatsApp messages.
+- NEXT_PUBLIC_ASSET_BASE_URL: leave empty. Only needed if images later move to a separate host such as Cloudflare R2 (see design/r2-manifest.json).
 
 ### Set up Supabase (one time)
 
@@ -76,8 +76,6 @@ Copy .env.example to .env.local and supply the real values. Do not put upload se
 4. Create your own admin login under Authentication > Users > Add user (email + password) — there is no public sign-up page, by design.
 5. Back in the SQL editor, run: `update profiles set is_admin = true where email = 'the-email-you-used';`
 6. Sign in at /316nas/login, then add your WhatsApp numbers under Settings.
-
-Upload every file listed in design/r2-manifest.json using its key. localPath now points to public/three16craft/... in this project. Preserve MIME types and versioned object keys. The GIF must remain image/gif. No upload or DNS change has been made.
 
 Restart the dev server after changing environment values; rebuild for production. To test from a phone on the same network, open the Network address `npm run dev` prints; next.config.ts allows common local-network ranges (iPhone hotspot 172.20.10.x, 192.168.x.x, 10.x.x.x).
 
