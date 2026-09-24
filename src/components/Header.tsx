@@ -3,11 +3,14 @@ import Link from "next/link";
 import { BrandLogo } from "@/components/BrandLogo";
 import { Icon } from "@/components/Icon";
 import { useCart } from "@/context/cart-context";
-import { categories } from "@/lib/products";
+import { useCatalog } from "@/context/catalog-context";
+import { useSiteSettings } from "@/context/site-settings-context";
 export function Header() {
   const { totalItems, openCart, ready } = useCart();
+  const { categories } = useCatalog();
+  const { location } = useSiteSettings();
   return <>
-    <div className="utility"><div className="wrap"><span>Architectural hardware &amp; finishing details</span><Link href="/#project-help">Planning a project? Let’s talk <span aria-hidden="true">↗</span></Link></div></div>
+    <div className="utility"><div className="wrap"><span>Architectural hardware &amp; finishing details{location && <> · {location}</>}</span><Link href="/#project-help">Planning a project? Let’s talk <span aria-hidden="true">↗</span></Link></div></div>
     <header className="site-header">
       <div className="wrap header-main">
         <Link className="brand" href="/" aria-label="three16craft home"><BrandLogo /></Link>

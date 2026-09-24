@@ -16,6 +16,7 @@ export function CartContents({ fullPage = false }: { fullPage?: boolean }) {
       <p className="item-total">{totalItems} {totalItems === 1 ? "item" : "items"} in your selection</p>
       <p>Share your list with us to confirm the details, availability and pricing.</p>
       <button className="button primary" onClick={() => { closeCart(); enquire(cartMessage(items, window.location.origin)); }}><Icon name="whatsapp" size={18} />Enquire about your cart</button>
+      <Link className="button secondary" href="/checkout" onClick={closeCart}>Submit order request</Link>
       {!fullPage && <Link className="cart-page-link" href="/cart" onClick={closeCart}>View full cart <Icon name="arrow-right" size={16} /></Link>}
     </div>
   </>;

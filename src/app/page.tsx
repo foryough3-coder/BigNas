@@ -1,15 +1,29 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@/components/Icon";
+import { JsonLd } from "@/components/JsonLd";
 import { ProductCollection } from "@/components/ProductCollection";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { categories, products } from "@/lib/products";
-import { assetUrl } from "@/lib/assets";
+import { assetUrl, brandAssets } from "@/lib/assets";
+import { getCatalog } from "@/lib/catalog";
+import { getSiteSettings } from "@/lib/settings";
+import { absoluteUrl, siteDescription, siteName } from "@/lib/site";
+// Filtered/search views (?category=, ?q=) are variations of the homepage.
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 export default async function Home({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
-  const params = await searchParams;
+  const [params, { products, categories }, settings] = await Promise.all([searchParams, getCatalog(), getSiteSettings()]);
+  const storeLd = {
+    "@context": "https://schema.org", "@type": "Store",
+    name: siteName, description: siteDescription, url: absoluteUrl("/"),
+    logo: absoluteUrl(assetUrl(brandAssets.static)), image: absoluteUrl("/opengraph-image.png"),
+    ...(settings.location && { address: { "@type": "PostalAddress", addressLocality: settings.location } }),
+    ...(settings.whatsappNumbers[0] && { telephone: "+" + settings.whatsappNumbers[0] }),
+  };
   const query = typeof params.q === "string" ? params.q.trim() : "";
   const category = typeof params.category === "string" && categories.some(c => c.id === params.category) ? params.category : "all";
   return <main id="main">
+    <JsonLd data={storeLd} />
     <section className="hero" id="top" aria-labelledby="hero-title">
       <Image className="hero-image" src={assetUrl("three16craft/banners/v1/hero-desktop.webp")} width={1851} height={850} unoptimized loading="eager" fetchPriority="high" alt="Polished silver and matte black glass spigots, a glass clamp, and gold and silver finials" />
       <div className="wrap hero-inner"><div className="hero-copy">

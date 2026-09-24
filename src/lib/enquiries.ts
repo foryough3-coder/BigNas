@@ -1,8 +1,8 @@
 import type { Product } from "@/lib/products";
-const number = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "").trim();
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "").trim().replace(/\/+$/, "");
-export function whatsappUrl(message: string): string | null {
-  return /^[1-9]\d{7,14}$/.test(number) ? "https://wa.me/" + number + "?text=" + encodeURIComponent(message) : null;
+export const isValidWhatsappNumber = (number: string) => /^[1-9]\d{7,14}$/.test(number);
+export function whatsappUrl(number: string | undefined, message: string): string | null {
+  return number && isValidWhatsappNumber(number) ? "https://wa.me/" + number + "?text=" + encodeURIComponent(message) : null;
 }
 export function productMessage(p: Product, quantity: number, origin: string) {
   return ["Hello three16craft, I’m interested in:", "", p.name, "Finish shown: " + p.finishLabel,

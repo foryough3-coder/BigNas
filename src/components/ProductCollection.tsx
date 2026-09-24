@@ -3,14 +3,16 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { ProductCard } from "@/components/ProductCard";
 import { Icon } from "@/components/Icon";
-import { products, categories, categoryName } from "@/lib/products";
+import { categoryName } from "@/lib/products";
+import { useCatalog } from "@/context/catalog-context";
 export function ProductCollection({ query = "", category = "all" }: { query?: string; category?: string }) {
   const router = useRouter();
+  const { products, categories } = useCatalog();
   const [pending, startTransition] = useTransition();
   const [limit, setLimit] = useState(query || category !== "all" ? products.length : 8);
   const [sort, setSort] = useState("curated");
   const results = products.filter(p => (category === "all" || category === p.category) &&
-    (p.name + " " + p.finishLabel + " " + categoryName(p.category)).toLowerCase().includes(query.toLowerCase()));
+    (p.name + " " + p.finishLabel + " " + categoryName(categories, p.category)).toLowerCase().includes(query.toLowerCase()));
   if (sort === "name") results.sort((a,b) => a.name.localeCompare(b.name));
   function filter(next: string, reset = false) {
     const params = new URLSearchParams();
